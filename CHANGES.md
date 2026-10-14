@@ -2,6 +2,10 @@
 
 This file is the release changelog, with one `## <version> - <title>` entry per release, newest first. The Cursor-to-Claude rewrite rules live in [`tools/substitutions.json`](tools/substitutions.json), and the [sync boundary](CONTRIBUTING.md#the-sync-boundary) in `CONTRIBUTING.md` defines how a change to upstream's skill content is declared.
 
+## 0.9.85 - Autopilot-full lessons from an eight-owner program
+
+Autopilot-full takes two lessons from one program that ran eight owners in parallel toward a passing test suite. Before the first owner starts, the root runs the target suite once on the base, maps every failure to a task, and lists the failures no task owns in the size statement. Each owner guards the plan's usage limit itself. It checks usage before every long command and keeps its Pause safely resume note current from its first push. The brief sets the pause level, lower the more agents run, and a root cron poll does not replace the owner's own check.
+
 ## 0.9.84 - run the Codex SessionStart hook again
 
 0.9.83 shipped a root `plugins/pstack/plugin.json` in the Agent Plugins 1.0.0 format. Codex reads that manifest before `.codex-plugin/plugin.json` and loads no plugin hooks for an Agent Plugins manifest, so on Codex the `SessionStart` hook stopped running and sessions lost the pstack routing instruction. Skills still loaded, and Claude Code was not affected. The root manifest is gone, so Codex reads `.codex-plugin/plugin.json` and its hooks again. The generator now fails when `plugins/pstack/plugin.json` exists, and the sync still excludes upstream's copy. A packaging test follows Codex's manifest lookup over the shipped plugin and checks that it finds the `SessionStart` hook, and that the 0.9.83 manifest would hide it. @Dude-Bear found the cause and confirmed it by moving the file aside, in [#265](https://github.com/michael-denyer/pstack-claude/issues/265).
